@@ -1,4 +1,6 @@
+import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/alert_page.dart';
+import 'package:estc_project/pages/log/log_history_page.dart';
 import 'package:estc_project/util/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -13,7 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  bool isHasIcon = false;
   int _selectedIndex = 0;
+  String title = "Trang chủ";
   final controller = PageController();
   final notificationApi = NotificationApi();
 
@@ -22,12 +26,33 @@ class HomePageState extends State<HomePage> {
   ) {
     controller.animateToPage(index,
         duration: const Duration(microseconds: 500), curve: Curves.easeIn);
-    if (index == 1) {
-      NotificationApi.showNotifications(
-        body: '123123',
-        payload: '21312321.a',
-        title: '123123123',
-      );
+    switch (index) {
+      case 0:
+        setState(() {
+          title = "Trang chủ";
+        });
+        break;
+      case 1:
+        NotificationApi.showNotifications(
+          body: '123123',
+          payload: '21312321.a',
+          title: '123123123',
+        );
+        setState(() {
+          title = "Thông báo";
+        });
+        break;
+      case 2:
+        setState(() {
+          isHasIcon = true;
+          title = "Add logs";
+        });
+        break;
+      case 3:
+        setState(() {
+          title = "User";
+        });
+        break;
     }
     setState(() {
       _selectedIndex = index;
@@ -49,13 +74,34 @@ class HomePageState extends State<HomePage> {
           : MessageItem('Sender $i', 'Message body $i'),
     );
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Trang chủ',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      appBar: isHasIcon
+          ? AppBar(
+              backgroundColor: Colors.white,
+              title: Text(
+                title,
+                style: const TextStyle(color: Colors.black),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LogHistoryPage(),
+                    ));
+                  },
+                  icon: const Icon(
+                    Icons.history,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+            )
+          : AppBar(
+              backgroundColor: Colors.white,
+              title: Text(
+                title,
+                style: const TextStyle(color: Colors.black),
+              ),
+            ),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
@@ -69,9 +115,11 @@ class HomePageState extends State<HomePage> {
           ),
           AlertPage(items: listItem),
           Container(
-            color: Colors.red,
-            child: const Center(child: Text('Page 3')),
-          ),
+              color: Colors.red,
+              child:
+                  //const LogHistoryPage()
+                  const AddLogsPage() //Center(child: Text('Page 3')), //Add log page
+              ),
           Container(
             color: Colors.red,
             child: const Center(child: Text('Page 4')),
