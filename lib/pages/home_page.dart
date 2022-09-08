@@ -1,10 +1,12 @@
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
+import 'package:estc_project/pages/alert_page.dart';
+import 'package:estc_project/pages/image_page.dart';
+import 'package:estc_project/pages/user_page.dart';
 import 'package:estc_project/util/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import '../widgets/ListItem.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,47 +63,54 @@ class HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    notificationApi.initialseNotifications();
     super.initState();
+
+    NotificationApi.initialseNotifications();
+    NotificationApi.isAndroidPermissionGranted();
+    NotificationApi.requestPermissions();
+    listenNotifications();
   }
 
+  void listenNotifications() => NotificationApi.onNotifications.stream.listen(
+        (event) => {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          ),
+        },
+      );
   @override
   Widget build(BuildContext context) {
-    final listItem = List<ListItem>.generate(
-      100,
-      (i) => i % 6 == 0
-          ? HeadingItem('Heading $i')
-          : MessageItem('Sender $i', 'Message body $i'),
-    );
     return Scaffold(
-      appBar: isHasIcon
-          ? AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                title,
-                style: const TextStyle(color: Colors.black),
+        appBar: isHasIcon
+            ? AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            title,
+            style: const TextStyle(color: Colors.black),
+          ),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const LogHistoryPage(),
+                ));
+              },
+              icon: const Icon(
+                Icons.history,
+                color: Colors.black,
               ),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LogHistoryPage(),
-                    ));
-                  },
-                  icon: const Icon(
-                    Icons.history,
-                    color: Colors.black,
-                  ),
-                )
-              ],
             )
-          : AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                title,
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
+          ],
+        )
+            : AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            title,
+            style: const TextStyle(color: Colors.black),
+          ),
+        ),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
