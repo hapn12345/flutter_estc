@@ -1,13 +1,10 @@
-import 'package:estc_project/pages/log/add_logs_page.dart';
-import 'package:estc_project/pages/alert_page.dart';
-import 'package:estc_project/pages/log/log_history_page.dart';
 import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/image_page.dart';
-import 'package:estc_project/pages/user_page.dart';
+import 'package:estc_project/pages/log/add_logs_page.dart';
+import 'package:estc_project/pages/log/log_history_page.dart';
 import 'package:estc_project/util/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../widgets/ListItem.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,37 +77,38 @@ class HomePageState extends State<HomePage> {
           ),
         },
       );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: isHasIcon
-            ? AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            title,
-            style: const TextStyle(color: Colors.black),
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const LogHistoryPage(),
-                ));
-              },
-              icon: const Icon(
-                Icons.history,
-                color: Colors.black,
+      appBar: isHasIcon
+          ? AppBar(
+              backgroundColor: Colors.white,
+              title: Text(
+                title,
+                style: const TextStyle(color: Colors.black),
               ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LogHistoryPage(),
+                    ));
+                  },
+                  icon: const Icon(
+                    Icons.history,
+                    color: Colors.black,
+                  ),
+                )
+              ],
             )
-          ],
-        )
-            : AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            title,
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
+          : AppBar(
+              backgroundColor: Colors.white,
+              title: Text(
+                title,
+                style: const TextStyle(color: Colors.black),
+              ),
+            ),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
@@ -122,17 +120,14 @@ class HomePageState extends State<HomePage> {
           const WebView(
             initialUrl: "https://www.facebook.com/hapn12345",
           ),
-          AlertPage(items: listItem),
+          AlertPage(),
           Container(
               color: Colors.red,
               child:
                   //const LogHistoryPage()
                   const AddLogsPage() //Center(child: Text('Page 3')), //Add log page
               ),
-          Container(
-            color: Colors.red,
-            child: const Center(child: Text('Page 4')),
-          ),
+          const ImagePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
