@@ -18,17 +18,21 @@ class SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 1), () async {
-      final prefs = await SharedPreferences.getInstance();
-      final showHome = prefs.getBool('showHome') ?? false;
-      //In the future check login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
+    Future.delayed(
+      const Duration(seconds: 1),
+      () async {
+        final prefs = await SharedPreferences.getInstance();
+        final showHome = prefs.getBool('showHome') ?? false;
+        //In the future check login
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
             builder: (context) =>
-                showHome ? const HomePage() : const OnboardingPage()),
-      );
-    });
+                showHome ? const HomePage() : const OnboardingPage(),
+          ),
+        );
+      },
+    );
   }
 
   @override

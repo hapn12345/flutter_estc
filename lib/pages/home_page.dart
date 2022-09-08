@@ -1,9 +1,9 @@
 import 'package:estc_project/pages/alert_page.dart';
+import 'package:estc_project/pages/image_page.dart';
+import 'package:estc_project/pages/user_page.dart';
 import 'package:estc_project/util/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import '../widgets/ListItem.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,9 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  bool isHasIcon = false;
   int _selectedIndex = 0;
   final controller = PageController();
-  final notificationApi = NotificationApi();
 
   void _onItemTapped(
     int index,
@@ -25,9 +25,18 @@ class HomePageState extends State<HomePage> {
     if (index == 1) {
       NotificationApi.showNotifications(
         body: '123123',
-        payload: '21312321.a',
+        payload: 'item x',
         title: '123123123',
       );
+    }
+    if (index == 2) {
+      setState(() {
+        isHasIcon = true;
+      });
+    } else {
+      setState(() {
+        isHasIcon = false;
+      });
     }
     setState(() {
       _selectedIndex = index;
@@ -36,26 +45,50 @@ class HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    notificationApi.initialseNotifications();
     super.initState();
+
+    NotificationApi.initialseNotifications();
+    NotificationApi.isAndroidPermissionGranted();
+    NotificationApi.requestPermissions();
+    listenNotifications();
   }
 
+  void listenNotifications() => NotificationApi.onNotifications.stream.listen(
+        (event) => {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          ),
+        },
+      );
   @override
   Widget build(BuildContext context) {
-    final listItem = List<ListItem>.generate(
-      100,
-      (i) => i % 6 == 0
-          ? HeadingItem('Heading $i')
-          : MessageItem('Sender $i', 'Message body $i'),
-    );
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Trang chủ',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      appBar: isHasIcon
+          ? AppBar(
+              backgroundColor: Colors.white,
+              title: const Text(
+                'Trang chủ',
+                style: TextStyle(color: Colors.black),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+            )
+          : AppBar(
+              backgroundColor: Colors.white,
+              title: const Text(
+                'Trang chủ',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
@@ -67,15 +100,9 @@ class HomePageState extends State<HomePage> {
           const WebView(
             initialUrl: "https://www.facebook.com/hapn12345",
           ),
-          AlertPage(items: listItem),
-          Container(
-            color: Colors.red,
-            child: const Center(child: Text('Page 3')),
-          ),
-          Container(
-            color: Colors.red,
-            child: const Center(child: Text('Page 4')),
-          ),
+          AlertPage(),
+          const ImagePage(),
+          const UserPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
