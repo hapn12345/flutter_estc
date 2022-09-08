@@ -67,26 +67,34 @@ class _AddLogsPage extends State<AddLogsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('LogID'),
-                        InputDecorator(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder()),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: logIdValue,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  logIdValue = value!;
-                                });
-                              },
-                              items: Constants.logIds
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                        Text('LogID'),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(
+                                  5.0) //border of dropdown button
+                              ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 5.0, right: 5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: logIdValue,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    logIdValue = value!;
+                                  });
+                                },
+                                isExpanded: true,
+                                items: Constants.logIds
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
                         ),
@@ -158,25 +166,31 @@ class _AddLogsPage extends State<AddLogsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Muc uu tien'),
-                InputDecorator(
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: prorityValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          prorityValue = value!;
-                        });
-                      },
-                      isExpanded: true,
-                      items: Constants.prorities
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius:
+                          BorderRadius.circular(5.0) //border of dropdown button
+                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: prorityValue,
+                        onChanged: (String? value) {
+                          setState(() {
+                            prorityValue = value!;
+                          });
+                        },
+                        isExpanded: true,
+                        items: Constants.prorities
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 )
