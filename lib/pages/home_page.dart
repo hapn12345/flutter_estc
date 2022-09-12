@@ -1,10 +1,12 @@
 import 'package:estc_project/pages/alert_page.dart';
-import 'package:estc_project/pages/image_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
+import 'package:estc_project/pages/user/user_page.dart';
 import 'package:estc_project/util/notification_api.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,22 +16,50 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  bool isHasIcon = false;
+  bool _isHasActionButtons = false;
   int _selectedIndex = 0;
-  String title = "Trang chủ";
+
+  void setSeleletedIndex(int value) {
+    setState(() {
+      _selectedIndex = value;
+      _isHasActionButtons =
+          (value == 1 || value == 2) ? true : false; //alert and add logs page
+    });
+  }
+
   final controller = PageController();
   final notificationApi = NotificationApi();
 
-  void _onItemTapped(
-    int index,
-  ) {
-    controller.animateToPage(index,
-        duration: const Duration(microseconds: 500), curve: Curves.easeIn);
+  late final VoidCallback historyAction;
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationApi.initialseNotifications();
+    NotificationApi.isAndroidPermissionGranted();
+    NotificationApi.requestPermissions();
+    listenNotifications();
+  }
+
+  String getTitle(int index) {
     switch (index) {
       case 0:
-        setState(() {
-          title = "Trang chủ";
-        });
+        return AppLocalizations.of(context).homePage;
+      case 1:
+        return AppLocalizations.of(context).alert;
+      case 2:
+        return AppLocalizations.of(context).addLogs;
+      default:
+        return AppLocalizations.of(context).user;
+    }
+  }
+
+  void _onItemTapped(int index) {
+    controller.animateToPage(index,
+        duration: const Duration(microseconds: 500), curve: Curves.easeIn);
+    setSeleletedIndex(index);
+    switch (index) {
+      case 0:
         break;
       case 1:
         NotificationApi.showNotifications(
@@ -37,35 +67,12 @@ class HomePageState extends State<HomePage> {
           payload: '21312321.a',
           title: '123123123',
         );
-        setState(() {
-          title = "Thông báo";
-        });
         break;
       case 2:
-        setState(() {
-          isHasIcon = true;
-          title = "Add logs";
-        });
         break;
       case 3:
-        setState(() {
-          title = "User";
-        });
         break;
     }
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    NotificationApi.initialseNotifications();
-    NotificationApi.isAndroidPermissionGranted();
-    NotificationApi.requestPermissions();
-    listenNotifications();
   }
 
   void listenNotifications() => NotificationApi.onNotifications.stream.listen(
@@ -81,40 +88,60 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isHasIcon
-          ? AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                title,
-                style: const TextStyle(color: Colors.black),
-              ),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LogHistoryPage(),
-                    ));
-                  },
-                  icon: const Icon(
-                    Icons.history,
-                    color: Colors.black,
-                  ),
-                )
-              ],
-            )
-          : AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                title,
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          getTitle(_selectedIndex),
+          style: const TextStyle(color: Colors.black),
+        ),
+        actions: _isHasActionButtons
+            ? (_selectedIndex == 1
+                ? [
+                    //refresh
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.refresh,
+                        color: Colors.black,
+                      ),
+                    ),
+                    //filter
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.filter_alt,
+                        color: Colors.black,
+                      ),
+                    )
+                  ]
+                : [
+                    //edit
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                    ),
+                    //history
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const LogHistoryPage(),
+                        ));
+                      },
+                      icon: const Icon(
+                        Icons.history,
+                        color: Colors.black,
+                      ),
+                    )
+                  ])
+            : [],
+      ),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          setSeleletedIndex(index);
         },
         children: [
           const WebView(
@@ -127,29 +154,29 @@ class HomePageState extends State<HomePage> {
                   //const LogHistoryPage()
                   const AddLogsPage() //Center(child: Text('Page 3')), //Add log page
               ),
-          const ImagePage(),
+          const UserPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: AppLocalizations.of(context).homePage,
             backgroundColor: Colors.grey,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.error_outline_outlined),
-            label: 'Alert',
+            label: AppLocalizations.of(context).alert,
             backgroundColor: Colors.grey,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.note),
-            label: 'Add Logs',
+            label: AppLocalizations.of(context).addLogs,
             backgroundColor: Colors.grey,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Cá nhân',
+            label: AppLocalizations.of(context).user,
             backgroundColor: Colors.grey,
           ),
         ],

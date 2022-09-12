@@ -26,21 +26,25 @@ class LogHistoryPage extends StatelessWidget {
             valueListenable:
                 Hive.box<LogItem>(Constants.LOG_ITEM_TABLE).listenable(),
             builder: (context, box, widget) {
-              return ListView.builder(
-                itemCount: box.values.length,
-                prototypeItem: LogHistoryCard(log: box.values.first),
-                itemBuilder: (context, index) {
-                  var log = box.values.toList()[index];
-                  return LogHistoryCard(
-                    log: log,
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EditLogPage(log: log),
-                      ));
-                    },
-                  );
-                },
-              );
+              if (box.values.isEmpty) {
+                return const Center(child: Text('There are not any log'));
+              } else {
+                return ListView.builder(
+                  itemCount: box.values.length,
+                  prototypeItem: LogHistoryCard(log: box.values.first),
+                  itemBuilder: (context, index) {
+                    var log = box.values.toList()[index];
+                    return LogHistoryCard(
+                      log: log,
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditLogPage(log: log),
+                        ));
+                      },
+                    );
+                  },
+                );
+              }
             }));
   }
 }

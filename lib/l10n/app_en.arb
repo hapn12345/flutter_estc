@@ -1,0 +1,18 @@
+{
+    "homePage" : "Home",
+    "@homePage": {
+      "description": ""
+    },
+    "alert" : "Alert",
+    "@alert": {
+      "description": ""
+    },
+    "addLogs" : "Add Logs",
+    "@addLogs": {
+      "description": ""
+    },
+    "user": "User",
+    "@user": {
+        "description": ""
+    }
+}

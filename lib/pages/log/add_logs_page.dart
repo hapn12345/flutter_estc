@@ -24,9 +24,9 @@ class _AddLogsPage extends State<AddLogsPage> {
 
   @override
   void dispose() {
-    listController.forEach((element) {
+    for (var element in listController) {
       element.dispose();
-    });
+    }
     super.dispose();
   }
 
