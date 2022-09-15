@@ -1,9 +1,7 @@
 import 'package:estc_project/widgets/date_picker.dart';
 import 'package:estc_project/widgets/log_id_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 
 import '../util/constants.dart';
 

@@ -1,4 +1,4 @@
-import 'package:estc_project/model/log_item.dart';
+import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/splash_page.dart';
 import 'package:estc_project/util/constants.dart';
 import '../../util/share_preference_util.dart';

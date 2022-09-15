@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../model/log_item.dart';
-import '../../widgets/MyTextField.dart';
+import '../../models/log_item.dart';
+import '../../widgets/my_text_field.dart';
 import 'dart:math';
 
 import '../../widgets/account_picker.dart';

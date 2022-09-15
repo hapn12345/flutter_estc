@@ -1,10 +1,10 @@
-import 'package:estc_project/widgets/LogHistoryCard.dart';
+import 'package:estc_project/widgets/log_history_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
-import '../../model/log_item.dart';
+import '../../models/log_item.dart';
 import '../../util/constants.dart';
 import 'edit_log_page.dart';
 

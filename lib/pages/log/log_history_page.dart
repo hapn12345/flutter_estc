@@ -1,7 +1,7 @@
-import 'package:estc_project/model/log_item.dart';
+import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/log/edit_log_page.dart';
 import 'package:estc_project/pages/log/filter_history_page.dart';
-import 'package:estc_project/widgets/LogHistoryCard.dart';
+import 'package:estc_project/widgets/log_history_card.dart';
 import 'package:estc_project/widgets/fitler_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,7 +23,7 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
   Future<void> deleteLog(LogItem log) async {
     var box = Hive.box<LogItem>(Constants.LOG_ITEM_TABLE);
     box.delete(log.key);
-    print('KhaiTQ-$log');
+    print('KhaiTQ-delete: $log');
     Fluttertoast.showToast(
         msg: AppLocalizations.of(context).deleted,
         toastLength: Toast.LENGTH_SHORT,

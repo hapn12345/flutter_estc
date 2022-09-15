@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:estc_project/model/log_item.dart';
+import 'package:estc_project/models/log_item.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

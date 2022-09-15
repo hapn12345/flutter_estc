@@ -1,4 +1,4 @@
-import 'package:estc_project/model/log_item.dart';
+import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/log/edit_log_page.dart';
 import 'package:estc_project/widgets/account_picker.dart';
 import 'package:estc_project/widgets/date_picker.dart';
@@ -7,7 +7,7 @@ import 'package:estc_project/widgets/priority_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:estc_project/widgets/MyTextField.dart';
+import 'package:estc_project/widgets/my_text_field.dart';
 
 import '../../util/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
