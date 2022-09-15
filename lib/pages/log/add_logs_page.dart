@@ -1,5 +1,6 @@
 import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/log/edit_log_page.dart';
+import 'package:estc_project/util/log_util.dart';
 import 'package:estc_project/widgets/account_picker.dart';
 import 'package:estc_project/widgets/date_picker.dart';
 import 'package:estc_project/widgets/log_id_picker.dart';
@@ -38,9 +39,9 @@ class _AddLogsPage extends State<AddLogsPage> {
   }
 
   void saveLog(LogItem log) {
-    var box = Hive.box<LogItem>(Constants.LOG_ITEM_TABLE);
+    var box = Hive.box<LogItem>(Constants.logItemTable);
     box.put(log.key, log);
-    debugPrint('KhaiTQ- saved log');
+    LogUtil.d(tag: 'KhaiTQ', 'Saved log');
     resetField();
     Fluttertoast.showToast(
         msg: AppLocalizations.of(context).saved,
@@ -124,8 +125,8 @@ class _AddLogsPage extends State<AddLogsPage> {
                           prority: priorityPicker.priority,
                           note: listController[1].text,
                           description: listController[2].text);
-                      debugPrint(
-                          'KhaiTQ - tao trang thai ${logItem.toString()}');
+                      LogUtil.d(
+                          tag: 'KhaiTQ', 'createing log ${logItem.toString()}');
                       saveLog(logItem);
                     },
                     child: Text(AppLocalizations.of(context).createLogs)),
