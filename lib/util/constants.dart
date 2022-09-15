@@ -20,4 +20,6 @@ class Constants {
   static const localeEN = Locale('en');
   static const localeVN = Locale('vi');
   static const dateFormat = 'yyyy-MM-dd';
+  static const kColorBgIntro = Color(0xFFF5EBE2);
+  
 }
