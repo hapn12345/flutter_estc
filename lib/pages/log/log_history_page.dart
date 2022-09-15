@@ -110,13 +110,35 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
                     ),
                   ),
                   itemBuilder: (c, log) {
-                    return LogHistoryCard(
-                      log: log,
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditLogPage(log: log),
-                        ));
+                    return Dismissible(
+                      key: Key(log.key),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        setState(() {
+                          deleteLog(log);
+                        });
                       },
+                      background: Row(
+                        children: const [
+                          Spacer(),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Icon(
+                              Icons.delete,
+                              size: 30.0,
+                              color: Colors.red,
+                            ),
+                          )
+                        ],
+                      ),
+                      child: LogHistoryCard(
+                        log: log,
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditLogPage(log: log),
+                          ));
+                        },
+                      ),
                     );
                   },
                 );
