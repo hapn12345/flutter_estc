@@ -1,30 +1,35 @@
 import 'package:hive/hive.dart';
+import 'dart:math';
 
 part 'log_item.g.dart';
 
 @HiveType(typeId: 1)
 class LogItem extends HiveObject {
   @HiveField(0)
-  String logId;
+  String key;
 
   @HiveField(1)
-  DateTime time;
+  String logId;
 
   @HiveField(2)
-  String accountName;
+  DateTime time;
 
   @HiveField(3)
-  String diaryType;
+  String accountName;
 
   @HiveField(4)
-  String prority;
+  String diaryType;
 
   @HiveField(5)
-  String note;
+  String prority;
 
   @HiveField(6)
+  String note;
+
+  @HiveField(7)
   String description;
   LogItem({
+    required this.key,
     required this.logId,
     required this.time,
     required this.accountName,
@@ -36,6 +41,6 @@ class LogItem extends HiveObject {
 
   @override
   String toString() {
-    return 'LogItem(logId: $logId, time: $time, accountName: $accountName, diaryType: $diaryType, prority: $prority, note: $note, description: $description)';
+    return 'LogItem( key: $key, logId: $logId, time: $time, accountName: $accountName, diaryType: $diaryType, prority: $prority, note: $note, description: $description)';
   }
 }
