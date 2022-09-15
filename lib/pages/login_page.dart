@@ -1,118 +1,175 @@
-import 'package:estc_project/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import 'home_page.dart';
 
+class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isCheck = false;
+  bool _passwordVisible = false;
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: [
-            Image.asset('images/a.webp', fit: BoxFit.cover),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          margin: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                  child: Text(
-                    'ĐĂNG NHẬP',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: 'Địa chỉ server',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: 'Tên tài khoản',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                  child: TextField(
-                    obscureText: true,
-                    obscuringCharacter: "*",
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: 'Mật khẩu',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 4, right: 20, bottom: 10),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        checkColor: Colors.blue,
-                        value: isCheck,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isCheck = value!;
-                          });
-                        },
-                      ),
-                      const Text('Hiện mật khẩu'),
-                    ],
-                  ),
-                ),
-                Center(
-                  child: OutlinedButton(
-                    onPressed: () => {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
-                      )
-                    },
-                    child: const Icon(Icons.arrow_right_alt),
-                  ),
-                ),
+                _header(context),
+                _inputField(context),
+                _forgotPassword(context),
+                _signup(context),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.settings),
-                    Icon(Icons.abc),
-                  ],
-                ),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  _header(context) {
+    return Column(
+      children: const [
+        Text(
+          "Đăng Nhập",
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+        ),
+        Text("Vui lòng nhập tài khoản mật khẩu"),
+      ],
+    );
+  }
+
+  _inputField(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextFormField(
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'Vui lòng không để trống';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              hintText: "Địa chỉ IP",
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none),
+              fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+              filled: true,
+              prefixIcon: const Icon(Icons.location_on)),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'Vui lòng không để trống';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              hintText: "Tài Khoản",
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none),
+              fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+              filled: true,
+              prefixIcon: const Icon(Icons.person)),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return 'Vui lòng không để trống';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            hintText: "Mật Khẩu",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18),
+                borderSide: BorderSide.none),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+            filled: true,
+            prefixIcon: const Icon(Icons.lock),
+            suffixIcon: IconButton(
+              icon: Icon(
+                // Based on passwordVisible state choose the icon
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Theme.of(context).primaryColorDark,
+              ),
+              onPressed: () {
+                // Update the state i.e. toogle the state of passwordVisible variable
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          obscureText: !_passwordVisible,
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            shape: const StadiumBorder(),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+          ),
+          child: const Text(
+            "Đăng Nhập",
+            style: TextStyle(fontSize: 20),
+          ),
+        )
+      ],
+    );
+  }
+
+  _forgotPassword(context) {
+    return TextButton(onPressed: () {}, child: const Text("Quên mật khẩu?"));
+  }
+
+  _signup(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Bạn chưa có tài khoản? "),
+        TextButton(onPressed: () {}, child: const Text("Đăng Ký"))
+      ],
+    );
+  }
+
+  static _password(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Invalid password!";
+    }
+    if (txt.length < 8) {
+      return "Password must has 8 characters";
+    }
+    if (!txt.contains(RegExp(r'[A-Z]'))) {
+      return "Password must has uppercase";
+    }
+    if (!txt.contains(RegExp(r'[0-9]'))) {
+      return "Password must has digits";
+    }
+    if (!txt.contains(RegExp(r'[a-z]'))) {
+      return "Password must has lowercase";
+    }
+    if (!txt.contains(RegExp(r'[#?!@$%^&*-]'))) {
+      return "Password must has special characters";
+    } else {
+      return;
+    }
   }
 }
