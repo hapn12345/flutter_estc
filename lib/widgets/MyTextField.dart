@@ -21,7 +21,6 @@ class MyTextField extends StatefulWidget {
 class _MyTextFieldState extends State<MyTextField> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     widget.controller.text = widget.text;
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:estc_project/model/log_item.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogHistoryCard extends StatelessWidget {
   final LogItem log;
@@ -26,6 +27,7 @@ class LogHistoryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
+        elevation: 5.0,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -46,23 +48,40 @@ class LogHistoryCard extends StatelessWidget {
                     ),
                   )),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'LogID: ${log.logId}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text('Gio: ${getTimeText(log.time)}'),
-                      Text('Ghi chu: ${log.note}'),
-                    ],
+                child: SizedBox(
+                  height: 80,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'LogID: ${log.logId}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            '${AppLocalizations.of(context).hour}: ${getTimeText(log.time)}'),
+                        Text(
+                            '${AppLocalizations.of(context).note}: ${log.note}'),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Align(
+              Container(
+                height: 80,
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: () => {onPressed!()},
+                  child: const Icon(
+                    Icons.edit,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                ),
+              )
+              /*Container(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                   onTap: () => {onPressed!()},
@@ -72,7 +91,7 @@ class LogHistoryCard extends StatelessWidget {
                     size: 24.0,
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
