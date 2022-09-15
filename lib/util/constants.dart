@@ -12,4 +12,5 @@ class Constants {
   ];
   static const LOCALE_EN = Locale('en');
   static const LOCALE_VN = Locale('vi');
+  static const kColorBgIntro = Color(0xFFF5EBE2);
 }
