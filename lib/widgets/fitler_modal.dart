@@ -1,3 +1,4 @@
+import 'package:estc_project/util/log_util.dart';
 import 'package:estc_project/widgets/date_picker.dart';
 import 'package:estc_project/widgets/log_id_picker.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,8 @@ class _FilterByDateModalState extends State<FilterByDateModal> {
                   var date = datePicker.dateTime;
                   var logID = logIDPicker.logID;
                   Navigator.of(context).pop();
-                  print('KhaiTQ-search logs in: $date and logId: $logID');
+                  LogUtil.d(
+                      tag: 'KhaiTQ', 'search logs in: $date and logId: $logID');
                   widget.callback(date, logID);
                 },
                 child: Text(AppLocalizations.of(context).search,
@@ -53,7 +55,7 @@ class _FilterByDateModalState extends State<FilterByDateModal> {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    print('KhaiTQ-close modal');
+                    LogUtil.d(tag: 'KhaiTQ', 'close modal');
                   },
                   child: Text(AppLocalizations.of(context).close)),
             ],

@@ -1,9 +1,8 @@
 import 'package:estc_project/util/constants.dart';
+import 'package:estc_project/util/log_util.dart';
 import 'package:estc_project/widgets/priority_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/log_item.dart';
@@ -55,9 +54,9 @@ class _EditLogPageState extends State<EditLogPage> {
   }
 
   void editLog(String key, LogItem log) {
-    var box = Hive.box<LogItem>(Constants.LOG_ITEM_TABLE);
+    var box = Hive.box<LogItem>(Constants.logItemTable);
     box.put(key, log);
-    debugPrint('KhaiTQ- edited log');
+    LogUtil.d(tag: 'KhaiTQ', 'edited log');
     Navigator.of(context).pop();
   }
 
@@ -141,8 +140,8 @@ class _EditLogPageState extends State<EditLogPage> {
                           prority: widget.log.prority,
                           note: listController[1].text,
                           description: listController[2].text);
-                      debugPrint(
-                          'KhaiTQ - tao trang thai ${logItem.toString()}');
+                      LogUtil.d(
+                          tag: 'KhaiTQ', 'editing  ${logItem.toString()}');
                       editLog(widget.log.key, logItem);
                     },
                     child: Text(AppLocalizations.of(context).saveChanged)),

@@ -1,9 +1,8 @@
+import 'package:estc_project/util/log_util.dart';
 import 'package:estc_project/widgets/log_history_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
-
 import '../../models/log_item.dart';
 import '../../util/constants.dart';
 import 'edit_log_page.dart';
@@ -31,7 +30,7 @@ class FilterHistoryPage extends StatelessWidget {
       ),
       body: ValueListenableBuilder<Box>(
           valueListenable:
-              Hive.box<LogItem>(Constants.LOG_ITEM_TABLE).listenable(),
+              Hive.box<LogItem>(Constants.logItemTable).listenable(),
           builder: (context, box, widget) {
             var dataList = box.values.toList() as List<LogItem>;
             var filtedList = dataList.where((log) =>
@@ -39,7 +38,7 @@ class FilterHistoryPage extends StatelessWidget {
                     log.time.month == date.month &&
                     log.time.day == date.day &&
                     log.logId == logID));
-            print('KhaiTQ-filted in date $date: $filtedList');
+            LogUtil.d(tag: 'KhaiTQ', 'filted in date $date: $filtedList');
             return filtedList.isEmpty
                 ? Center(
                     child: Text(AppLocalizations.of(context).noAnyResult),
