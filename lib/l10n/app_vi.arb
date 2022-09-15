@@ -1,6 +1,25 @@
 {
     "homePage" : "Trang chủ",
     "alert" : "Cảnh báo",
-    "addLogs" : "Thêm logs",
-    "user": "Cá nhân"
+    "addLogs" : "Thêm trạng thái",
+    "user": "Cá nhân",
+    "time": "Thời gian",
+    "accountName": "Tên tài khoản",
+    "diaryType": "Loại nhật ký",
+    "prority": "Mức ưu tiên",
+    "note": "Ghi chú",
+    "description": "Mô tả",
+    "createLogs" : "Tạo trạng thái",
+    "hour" : "Giờ",
+    "emptyLogsMessage" : "Không có logs nào cả",
+    "saved" : "Đã lưu",
+    "deleted" : "Đã xoá",
+    "editLog" : "Chỉnh sửa trạng thái",
+    "saveChanged" : "Lưu thay đổi",
+    "addLogsHistory" : "Lịch sử thêm",
+    "date" : "Ngày",
+    "search" : "Tìm",
+    "close" : "Đóng",
+    "seachResults" : "Kết quả tìm kiếm",
+    "noAnyResult" : "Không có kết quả nào"
 }

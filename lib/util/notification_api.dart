@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:estc_project/util/log_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -20,7 +21,7 @@ class NotificationApi {
     _notifications.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
       if (payload != null) {
-        debugPrint('notification payload: $payload');
+        LogUtil.d('notification payload: $payload');
       }
       onNotifications.add(payload);
     });

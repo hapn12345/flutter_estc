@@ -1,8 +1,7 @@
 import 'package:estc_project/main.dart';
+import 'package:estc_project/util/log_util.dart';
 import 'package:flutter/material.dart';
-
 import '../../util/constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../util/share_preference_util.dart';
 
@@ -27,7 +26,7 @@ class _UserPageState extends State<UserPage> {
     setState(() {
       _isVietnamese = (languageCode == 'vi');
     });
-    print('KhaiTQ-isVietnamese:$_isVietnamese');
+    LogUtil.d(tag: 'KhaiTQ', 'isVietnamese:$_isVietnamese');
   }
 
   @override
@@ -37,7 +36,7 @@ class _UserPageState extends State<UserPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Ngôn ngữ Tiếng Việt'),
+        const Text('Ngôn ngữ Tiếng Việt'),
         Switch(
             value: _isVietnamese,
             onChanged: (bool isVietnamese) {
@@ -46,7 +45,7 @@ class _UserPageState extends State<UserPage> {
               });
               MyApp.of(context).then((app) {
                 app!.setLocale(
-                    isVietnamese ? Constants.LOCALE_VN : Constants.LOCALE_EN);
+                    isVietnamese ? Constants.localeVN : Constants.localeEN);
               });
             }),
       ],

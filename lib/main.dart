@@ -1,6 +1,7 @@
-import 'package:estc_project/model/log_item.dart';
+import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/splash_page.dart';
 import 'package:estc_project/util/constants.dart';
+import 'package:estc_project/util/log_util.dart';
 import '../../util/share_preference_util.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,17 +9,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prepare();
+  runApp(const MyApp());
+}
+
+Future<void> prepare() async {
+  // Initialize Log Util
+  LogUtil.init(isDebug: true);
+  // Initialize shared prefereneces
+  await SharedPreferenceUtil().init();
   // Initialize hive
   await Hive.initFlutter();
   // Registering the adapter
   Hive.registerAdapter(LogItemAdapter());
   // Opening the box
-  var box = await Hive.openBox<LogItem>(Constants.LOG_ITEM_TABLE);
-  debugPrint('KhaiTQ - ${box.values.toList().toString()}');
-  WidgetsFlutterBinding.ensureInitialized();
-  // Initialize shared prefereneces
-  await SharedPreferenceUtil().init();
-  runApp(const MyApp());
+  await Hive.openBox<LogItem>(Constants.logItemTable);
 }
 
 class MyApp extends StatefulWidget {
@@ -33,7 +39,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Constants.LOCALE_EN;
+  Locale _locale = Constants.localeEN;
 
   @override
   void initState() {
@@ -46,8 +52,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _locale = Locale(languageCode);
     });
-    print('KhaiTQ-languageCode:$languageCode');
-    print('KhaiTQ-locale:$_locale');
+    LogUtil.d('languageCode:$languageCode, locale:$_locale');
   }
 
   void setLocale(Locale value) {
@@ -55,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       _locale = value;
     });
     SharedPreferenceUtil().setLanguageCode(value.languageCode);
-    print('KhaiTQ-setLocale:${_locale.languageCode}');
+    LogUtil.d(tag: 'KhaiTQ', 'setLocale:${_locale.languageCode}');
   }
 
   @override

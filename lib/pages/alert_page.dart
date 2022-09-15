@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/ListItem.dart';
+import '../widgets/list_item.dart';
 
 class AlertPage extends StatefulWidget {
   final listItem = List<ListItem>.generate(
