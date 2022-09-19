@@ -1,15 +1,30 @@
+import 'package:estc_project/network/network_request.dart';
+import 'package:estc_project/pages/home_page.dart';
+import 'package:estc_project/util/share_preference_util.dart';
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
+import '../widgets/text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = false;
+  bool _showTextLoginFailed = false;
+  TextEditingController userControllerName = TextEditingController();
+  TextEditingController passWordControllerName = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    userControllerName.dispose();
+    passWordControllerName.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,77 +65,73 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextFormField(
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return 'Vui lòng không để trống';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-              hintText: "Địa chỉ IP",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none),
-              fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
-              filled: true,
-              prefixIcon: const Icon(Icons.location_on)),
+        CustomTextFormField(
+          key: widget.key,
+          labelText: "Địa chỉ IP",
+          iconPrefix: Icons.location_on,
+          isShowIconSufix: false,
+          passwordVisible: _passwordVisible,
+          iconSufixListener: () {},
+          textFieldController: null,
         ),
         const SizedBox(height: 10),
-        TextFormField(
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return 'Vui lòng không để trống';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-              hintText: "Tài Khoản",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none),
-              fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
-              filled: true,
-              prefixIcon: const Icon(Icons.person)),
+        CustomTextFormField(
+          key: widget.key,
+          labelText: "Tài Khoản",
+          iconPrefix: Icons.person,
+          passwordVisible: _passwordVisible,
+          isShowIconSufix: false,
+          iconSufixListener: () {},
+          textFieldController: userControllerName,
         ),
         const SizedBox(height: 10),
-        TextFormField(
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return 'Vui lòng không để trống';
-            }
-            return null;
+        CustomTextFormField(
+          key: widget.key,
+          labelText: "Mật Khẩu",
+          iconPrefix: Icons.lock,
+          passwordVisible: _passwordVisible,
+          isShowIconSufix: true,
+          iconSufixListener: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible;
+            });
           },
-          decoration: InputDecoration(
-            hintText: "Mật Khẩu",
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
-            filled: true,
-            prefixIcon: const Icon(Icons.lock),
-            suffixIcon: IconButton(
-              icon: Icon(
-                // Based on passwordVisible state choose the icon
-                _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                color: Theme.of(context).primaryColorDark,
-              ),
-              onPressed: () {
-                // Update the state i.e. toogle the state of passwordVisible variable
-                setState(() {
-                  _passwordVisible = !_passwordVisible;
-                });
-              },
-            ),
-          ),
-          obscureText: !_passwordVisible,
+          textFieldController: passWordControllerName,
         ),
+        _showTextLoginFailed
+            ? const Padding(
+                padding: EdgeInsets.only(top: 4.0),
+                child: Text(
+                  'Đăng nhập thất bại',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              NetWorkRequest().login(
+                userControllerName.text.toString(),
+                passWordControllerName.text.toString(),
+                () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const HomePage()));
+                },
+                () {
+                  setState(() {
+                    _showTextLoginFailed = true;
+                  });
+                },
+              ).then((value) => SharedPreferenceUtil().setToken(value));
+            } else {
+              setState(() {
+                _showTextLoginFailed = false;
+              });
             }
           },
           style: ElevatedButton.styleFrom(
@@ -131,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
             "Đăng Nhập",
             style: TextStyle(fontSize: 20),
           ),
-        )
+        ),
       ],
     );
   }
@@ -148,28 +159,5 @@ class _LoginPageState extends State<LoginPage> {
         TextButton(onPressed: () {}, child: const Text("Đăng Ký"))
       ],
     );
-  }
-
-  static _password(String? txt) {
-    if (txt == null || txt.isEmpty) {
-      return "Invalid password!";
-    }
-    if (txt.length < 8) {
-      return "Password must has 8 characters";
-    }
-    if (!txt.contains(RegExp(r'[A-Z]'))) {
-      return "Password must has uppercase";
-    }
-    if (!txt.contains(RegExp(r'[0-9]'))) {
-      return "Password must has digits";
-    }
-    if (!txt.contains(RegExp(r'[a-z]'))) {
-      return "Password must has lowercase";
-    }
-    if (!txt.contains(RegExp(r'[#?!@$%^&*-]'))) {
-      return "Password must has special characters";
-    } else {
-      return;
-    }
   }
 }
