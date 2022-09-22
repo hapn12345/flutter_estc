@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -66,11 +65,11 @@ class HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
-        NotificationApi.showNotifications(
+        /*NotificationApi.showNotifications(
           body: '123123',
           payload: '21312321.a',
           title: '123123123',
-        );
+        );*/
         break;
       case 2:
         break;
