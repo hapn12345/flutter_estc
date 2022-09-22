@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../util/share_preference_util.dart';
 import '../widgets/list_item.dart';
 
 class AlertPage extends StatefulWidget {
@@ -17,14 +18,29 @@ class AlertPage extends StatefulWidget {
 }
 
 class _AlertPageState extends State<AlertPage> {
+  String _token = '';
+
   @override
   void initState() {
     super.initState();
+    prepare();
+  }
+
+  Future<void> prepare() async {
+    var token = await SharedPreferenceUtil().getFcmToken();
+    setState(() {
+      _token = token;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Center(
+        child: Text('Token:\n $_token'),
+      ),
+    );
+    /*return Scaffold(
       body: ListView.builder(
         // Let the ListView know how many items it needs to build.
         itemCount: widget.listItem.length,
@@ -39,6 +55,6 @@ class _AlertPageState extends State<AlertPage> {
           );
         },
       ),
-    );
+    );*/
   }
 }
