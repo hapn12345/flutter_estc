@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 // ignore: depend_on_referenced_packages
+import 'package:estc_project/models/user.dart';
+import 'package:estc_project/util/share_preference_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/album.dart';
@@ -14,6 +18,11 @@ class NetWorkRequest {
     var list = json.decode(reponseBody) as List<dynamic>;
     List<Album> albums = list.map((model) => Album.fromJson(model)).toList();
     return albums;
+  }
+
+  User parseUser(String reponseBody) {
+    var user = json.decode(reponseBody) as User;
+    return user;
   }
 
   Future<List<Album>> fetchAlbum() async {
@@ -51,6 +60,23 @@ class NetWorkRequest {
       throw Exception('Wrong username or password');
     } else {
       throw Exception('Can\'t Login');
+    }
+  }
+
+  Future<User> getInfoUser(int id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/users/$id'),
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${SharedPreferenceUtil().getToken()}"
+      },
+    );
+    if (response.statusCode == 200) {
+      return User.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 404) {
+      throw Exception('Wrong');
+    } else {
+      throw Exception('Can\'t get Info');
     }
   }
 }
