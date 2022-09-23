@@ -1,4 +1,5 @@
 import 'package:estc_project/network/network_request.dart';
+import 'package:estc_project/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -79,7 +80,27 @@ class _UserPageState extends State<SettingPage> {
                 ),
               ),
               const SizedBox(height: 1),
-              infoUser()
+              infoUser(),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacement(MaterialPageRoute(builder: (context) {
+                    return const LoginPage();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                ),
+                child: const SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    "Đăng Xuất",
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
