@@ -67,11 +67,11 @@ class HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
-        NotificationApi.showNotifications(
+        /*NotificationApi.showNotifications(
           body: '123123',
           payload: '21312321.a',
           title: '123123123',
-        );
+        );*/
         break;
       case 2:
         break;

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1006835157713",
+    "project_id": "push-notifcations-server",
+    "storage_bucket": "push-notifcations-server.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006835157713:android:ba57a239402541b4f493f0",
+        "android_client_info": {
+          "package_name": "com.example.estc_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006835157713-aoj1n09g4kmlkbel067qehoe795ndsdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2gHRzTDNpy0xiSX3xOSuZZnxfOIBYKVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006835157713-aoj1n09g4kmlkbel067qehoe795ndsdn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1006835157713-dvt8rng44018cv08uibmlhmakvtgrr84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.estcProject"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006835157713:android:7eab2e092a197f61f493f0",
+        "android_client_info": {
+          "package_name": "com.rikkei.estc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006835157713-aoj1n09g4kmlkbel067qehoe795ndsdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2gHRzTDNpy0xiSX3xOSuZZnxfOIBYKVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006835157713-aoj1n09g4kmlkbel067qehoe795ndsdn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1006835157713-dvt8rng44018cv08uibmlhmakvtgrr84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.estcProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
