@@ -1,12 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:estc_project/pages/user/setting_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import 'package:estc_project/network/network_request.dart';
 import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
-import 'package:estc_project/pages/user/user_page.dart';
-import 'package:estc_project/util/notification_api.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:estc_project/util/share_preference_util.dart';
+
+import '../util/notification_util.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +22,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   bool _isHasActionButtons = false;
   int _selectedIndex = 0;
-
+  String setTokenToLocalStorage =
+      "localStorage.setItem('aT', '${SharedPreferenceUtil().getToken()}');";
   void setSeleletedIndex(int value) {
     setState(() {
       _selectedIndex = value;
@@ -62,11 +67,11 @@ class HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
-        NotificationApi.showNotifications(
+        /*NotificationApi.showNotifications(
           body: '123123',
           payload: '21312321.a',
           title: '123123123',
-        );
+        );*/
         break;
       case 2:
         break;
@@ -89,10 +94,10 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         title: Text(
           getTitle(_selectedIndex),
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.white),
         ),
         actions: _isHasActionButtons
             ? (_selectedIndex == 1
@@ -102,7 +107,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.refresh,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     //filter
@@ -110,7 +115,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.filter_alt,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     )
                   ]
@@ -120,7 +125,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.edit,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     //history
@@ -132,7 +137,7 @@ class HomePageState extends State<HomePage> {
                       },
                       icon: const Icon(
                         Icons.history,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     )
                   ])
@@ -144,8 +149,15 @@ class HomePageState extends State<HomePage> {
           setSeleletedIndex(index);
         },
         children: [
-          const WebView(
-            initialUrl: "https://www.facebook.com/hapn12345",
+          KeepAlivePage(
+            key: widget.key,
+            child: WebView(
+              initialUrl: NetWorkRequest.baseUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                webViewController.runJavascript(setTokenToLocalStorage);
+              },
+            ),
           ),
           AlertPage(),
           Container(
@@ -154,36 +166,61 @@ class HomePageState extends State<HomePage> {
                   //const LogHistoryPage()
                   const AddLogsPage() //Center(child: Text('Page 3')), //Add log page
               ),
-          const UserPage(),
+          const KeepAlivePage(child: SettingPage()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: AppLocalizations.of(context).homePage,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.error_outline_outlined),
+            icon: const Icon(Icons.error_outline_outlined),
             label: AppLocalizations.of(context).alert,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.note),
+            icon: const Icon(Icons.note),
             label: AppLocalizations.of(context).addLogs,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             label: AppLocalizations.of(context).user,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
     );
   }
+}
+
+class KeepAlivePage extends StatefulWidget {
+  const KeepAlivePage({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  KeepAlivePageState createState() => KeepAlivePageState();
+}
+
+class KeepAlivePageState extends State<KeepAlivePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return widget.child;
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

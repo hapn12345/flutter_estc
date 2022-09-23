@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferenceUtil {
   static const languageCodeId = "LANGUAGE_CODE_ID";
   static const accoutListId = "ACCOUNT_LIST_ID";
+  static const keyToken = "KEY_TOKEN";
+  static const fcmToken = "FCM_TOKEN";
 
   static final SharedPreferenceUtil _instance =
       SharedPreferenceUtil._internal();
@@ -35,5 +37,23 @@ class SharedPreferenceUtil {
 
   Future<void> setAccountList(List<String> accountList) async {
     _prefs.setStringList(accoutListId, accountList);
+  }
+
+  Future<dynamic> setToken(String token) async {
+    _prefs.setString(keyToken, token);
+  }
+
+  String getToken() {
+    var token = _prefs.getString(keyToken);
+    return token ?? '';
+  }
+
+  Future<void> setFcmToken(String token) async {
+    _prefs.setString(fcmToken, token);
+  }
+
+  Future<String> getFcmToken() async {
+    var token = _prefs.getString(fcmToken);
+    return token ?? '';
   }
 }
