@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:estc_project/pages/user/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -7,9 +8,9 @@ import 'package:estc_project/network/network_request.dart';
 import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
-import 'package:estc_project/pages/user/user_page.dart';
-import 'package:estc_project/util/notification_api.dart';
 import 'package:estc_project/util/share_preference_util.dart';
+
+import '../util/notification_util.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -93,10 +94,10 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         title: Text(
           getTitle(_selectedIndex),
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.white),
         ),
         actions: _isHasActionButtons
             ? (_selectedIndex == 1
@@ -106,7 +107,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.refresh,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     //filter
@@ -114,7 +115,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.filter_alt,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     )
                   ]
@@ -124,7 +125,7 @@ class HomePageState extends State<HomePage> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.edit,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     //history
@@ -136,7 +137,7 @@ class HomePageState extends State<HomePage> {
                       },
                       icon: const Icon(
                         Icons.history,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     )
                   ])
@@ -165,7 +166,7 @@ class HomePageState extends State<HomePage> {
                   //const LogHistoryPage()
                   const AddLogsPage() //Center(child: Text('Page 3')), //Add log page
               ),
-          const UserPage(),
+          const KeepAlivePage(child: SettingPage()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -173,26 +174,26 @@ class HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
             label: AppLocalizations.of(context).homePage,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.error_outline_outlined),
             label: AppLocalizations.of(context).alert,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.note),
             label: AppLocalizations.of(context).addLogs,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: AppLocalizations.of(context).user,
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
     );
@@ -208,10 +209,10 @@ class KeepAlivePage extends StatefulWidget {
   final Widget child;
 
   @override
-  _KeepAlivePageState createState() => _KeepAlivePageState();
+  KeepAlivePageState createState() => KeepAlivePageState();
 }
 
-class _KeepAlivePageState extends State<KeepAlivePage>
+class KeepAlivePageState extends State<KeepAlivePage>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
