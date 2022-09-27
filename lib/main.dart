@@ -130,6 +130,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = Constants.localeEN;
+  ThemeData _themeData = ThemeData();
 
   @override
   void initState() {
@@ -164,6 +165,12 @@ class _MyAppState extends State<MyApp> {
     LogUtil.d(tag: 'KhaiTQ', 'setLocale:${_locale.languageCode}');
   }
 
+  void setThemeMode(ThemeData themeData) {
+    setState(() {
+      _themeData = themeData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -180,9 +187,7 @@ class _MyAppState extends State<MyApp> {
       ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: _themeData,
       home: const SplashPage(),
     );
   }

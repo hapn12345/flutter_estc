@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceUtil {
@@ -5,6 +7,7 @@ class SharedPreferenceUtil {
   static const accoutListId = "ACCOUNT_LIST_ID";
   static const keyToken = "KEY_TOKEN";
   static const fcmToken = "FCM_TOKEN";
+  static const keyDarkMode = "KEY_DARK_MODE";
 
   static final SharedPreferenceUtil _instance =
       SharedPreferenceUtil._internal();
@@ -55,5 +58,14 @@ class SharedPreferenceUtil {
   Future<String> getFcmToken() async {
     var token = _prefs.getString(fcmToken);
     return token ?? '';
+  }
+
+  Future<dynamic> setDarkMode(bool isDarkMode) async {
+    _prefs.setBool(keyDarkMode, isDarkMode);
+  }
+
+  bool getDarkMode() {
+    var darkMode = _prefs.getBool(keyDarkMode);
+    return darkMode ?? false;
   }
 }

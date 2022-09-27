@@ -116,19 +116,21 @@ class _LoginPageState extends State<LoginPage> {
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              NetWorkRequest().login(
-                userControllerName.text.toString(),
-                passWordControllerName.text.toString(),
-                () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const HomePage()));
-                },
-                () {
-                  setState(() {
-                    _showTextLoginFailed = true;
-                  });
-                },
-              ).then((value) => SharedPreferenceUtil().setToken(value));
+              // NetWorkRequest().login(
+              //   userControllerName.text.toString(),
+              //   passWordControllerName.text.toString(),
+              //   () {
+              //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //         builder: (context) => const HomePage()));
+              //   },
+              //   () {
+              //     setState(() {
+              //       _showTextLoginFailed = true;
+              //     });
+              //   },
+              // ).then((value) => SharedPreferenceUtil().setToken(value));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             } else {
               setState(() {
                 _showTextLoginFailed = false;
