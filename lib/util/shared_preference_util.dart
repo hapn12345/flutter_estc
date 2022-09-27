@@ -5,6 +5,7 @@ class SharedPreferenceUtil {
   static const accoutListId = "ACCOUNT_LIST_ID";
   static const keyToken = "KEY_TOKEN";
   static const fcmToken = "FCM_TOKEN";
+  static const firstLaunch = "FIRST_LAUNCH";
 
   static final SharedPreferenceUtil _instance =
       SharedPreferenceUtil._internal();
@@ -39,7 +40,7 @@ class SharedPreferenceUtil {
     _prefs.setStringList(accoutListId, accountList);
   }
 
-  Future<dynamic> setToken(String token) async {
+  Future<void> setToken(String token) async {
     _prefs.setString(keyToken, token);
   }
 
@@ -55,5 +56,13 @@ class SharedPreferenceUtil {
   Future<String> getFcmToken() async {
     var token = _prefs.getString(fcmToken);
     return token ?? '';
+  }
+
+  Future<bool> isFirstLaunch() async {
+    return _prefs.getBool(firstLaunch) ?? true;
+  }
+
+  Future<void> setFirstLaunch(bool value) async {
+    await _prefs.setBool(firstLaunch, value);
   }
 }

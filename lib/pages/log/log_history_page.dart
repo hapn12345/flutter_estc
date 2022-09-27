@@ -1,6 +1,5 @@
 import 'package:estc_project/models/log_item.dart';
 import 'package:estc_project/pages/log/edit_log_page.dart';
-import 'package:estc_project/pages/log/filter_history_page.dart';
 import 'package:estc_project/util/log_util.dart';
 import 'package:estc_project/widgets/log_history_card.dart';
 import 'package:estc_project/widgets/fitler_modal.dart';
@@ -11,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:grouped_list/grouped_list.dart';
 
+import '../../routing/route_state.dart';
 import '../../util/constants.dart';
 
 class LogHistoryPage extends StatefulWidget {
@@ -39,12 +39,13 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(AppLocalizations.of(context).addLogsHistory,
-              style: const TextStyle(color: Colors.black)),
+          //backgroundColor: Colors.white,
+          title: Text(AppLocalizations.of(context).addLogsHistory),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           actions: [
             Padding(
@@ -61,23 +62,24 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
                             topRight: Radius.circular(10.0))),
                     context: context,
                     builder: (context) => FilterByDateModal(
-                      callback: ((date, logID) {
-                        print('KhaiTQ-filter logs in date: $date');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => FilterHistoryPage(
-                              date: date,
-                              logID: logID,
-                            ),
-                          ),
-                        );
+                      callback: ((date, logID) async {
+                        LogUtil.d('KhaiTQ-filter logs in date: $date');
+                        await RouteStateScope.of(context)
+                            .go('/log/log_history/${date.toString()}&&$logID');
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => FilterHistoryPage(
+                        //       date: date,
+                        //       logID: logID,
+                        //     ),
+                        //   ),
+                        // );
                       }),
                     ),
                   );
                 },
                 child: const Icon(
                   Icons.filter_list,
-                  color: Colors.blue,
                   size: 24.0,
                 ),
               ),
@@ -134,6 +136,8 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
                       child: LogHistoryCard(
                         log: log,
                         onPressed: () {
+                          // RouteStateScope.of(context)
+                          //     .go('/log/edit_log/${log.logId}');
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EditLogPage(log: log),
                           ));

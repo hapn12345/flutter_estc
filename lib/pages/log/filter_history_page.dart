@@ -50,13 +50,7 @@ class _FilterHistoryPageState extends State<FilterHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(AppLocalizations.of(context).seachResults,
-            style: const TextStyle(color: Colors.black)),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        title: Text(AppLocalizations.of(context).seachResults),
       ),
       body: ValueListenableBuilder<Box>(
           valueListenable:

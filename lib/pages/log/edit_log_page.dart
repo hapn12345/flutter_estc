@@ -57,20 +57,14 @@ class _EditLogPageState extends State<EditLogPage> {
     var box = Hive.box<LogItem>(Constants.logItemTable);
     box.put(key, log);
     LogUtil.d(tag: 'KhaiTQ', 'edited log');
-    Navigator.of(context).pop();
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(AppLocalizations.of(context).editLog,
-            style: const TextStyle(color: Colors.black)),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        title: Text(AppLocalizations.of(context).editLog),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
