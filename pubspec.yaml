@@ -51,6 +51,7 @@ dependencies:
   grouped_list: ^5.1.2
   firebase_core: ^1.22.0
   firebase_messaging: ^13.0.2
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   hive_generator: ^1.1.3
