@@ -10,8 +10,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:estc_project/widgets/my_text_field.dart';
 
+import '../../routing/route_state.dart';
 import '../../util/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'log_history_page.dart';
 
 class AddLogsPage extends StatefulWidget {
   const AddLogsPage({Key? key}) : super(key: key);
@@ -62,6 +65,29 @@ class _AddLogsPage extends State<AddLogsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).addLogs),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.black,
+            ),
+          ),
+          //history
+          IconButton(
+            onPressed: () async {
+              final routeState = RouteStateScope.of(context);
+              await routeState.go('/log/log_history');
+            },
+            icon: const Icon(
+              Icons.history,
+              color: Colors.black,
+            ),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(shrinkWrap: true, children: [

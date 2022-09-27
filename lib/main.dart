@@ -1,20 +1,20 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:estc_project/models/log_item.dart';
-import 'package:estc_project/pages/alert_page.dart';
-import 'package:estc_project/pages/splash_page.dart';
+
 import 'package:estc_project/util/constants.dart';
 import 'package:estc_project/util/log_util.dart';
-import '../../util/share_preference_util.dart';
+import 'util/shared_preference_util.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'app.dart';
 import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -84,7 +84,9 @@ void showFlutterNotification(RemoteMessage message) {
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-Future main() async {
+void main() {
+  // Initialize UrlStrategy
+  setHashUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   prepare();
   runApp(const MyApp());
@@ -115,75 +117,4 @@ Future<void> prepare() async {
     LogUtil.d(tag: 'KhaiTQ', 'FCM Token: $token');
     SharedPreferenceUtil().setFcmToken(token ?? '');
   });
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-
-  static Future<_MyAppState?> of(BuildContext context) async {
-    return context.findAncestorStateOfType<_MyAppState>();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  Locale _locale = Constants.localeEN;
-
-  @override
-  void initState() {
-    super.initState();
-    prepare();
-  }
-
-  Future<void> prepare() async {
-    var languageCode = await SharedPreferenceUtil().getLanguageCode();
-    setState(() {
-      _locale = Locale(languageCode);
-    });
-    LogUtil.d('languageCode:$languageCode, locale:$_locale');
-
-    FirebaseMessaging.onMessage.listen(showFlutterNotification);
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      LogUtil.d('A new onMessageOpenedApp event was published!');
-      Navigator.pushNamed(
-        context,
-        '/alert',
-        arguments: AlertPage(),
-      );
-    });
-  }
-
-  void setLocale(Locale value) {
-    setState(() {
-      _locale = value;
-    });
-    SharedPreferenceUtil().setLanguageCode(value.languageCode);
-    LogUtil.d(tag: 'KhaiTQ', 'setLocale:${_locale.languageCode}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: _locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('vi'),
-      ],
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashPage(),
-    );
-  }
 }

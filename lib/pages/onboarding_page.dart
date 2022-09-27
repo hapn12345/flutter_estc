@@ -1,8 +1,10 @@
+import 'package:estc_project/util/shared_preference_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../routing/route_state.dart';
 import '../util/constants.dart';
 import 'login_page.dart';
 
@@ -77,15 +79,8 @@ class OnboardingPageState extends State<OnboardingPage> {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      prefs.setBool('showHome', true);
-
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      );
+                      await SharedPreferenceUtil().setFirstLaunch(false).then(
+                          (value) => RouteStateScope.of(context).go('/login'));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(right: 8.0),
