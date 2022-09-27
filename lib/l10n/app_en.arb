@@ -1,95 +1,95 @@
 {
-    "homePage" : "Home",
-    "@homePage": {
-      "description": ""
-    },
-    "alert" : "Alert",
-    "@alert": {
-      "description": ""
-    },
-    "addLogs" : "Add Logs",
-    "@addLogs": {
-      "description": ""
-    },
-    "user": "User",
-    "@user": {
-        "description": ""
-    },
-    "time": "Time",
-    "@time": {
-        "description": ""
-    },
-    "accountName": "Account Name",
-    "@accountName": {
-        "description": ""
-    },
-    "diaryType": "Diary Type",
-    "@diaryType": {
-        "description": ""
-    },
-    "prority": "Prority",
-    "@prority": {
-        "description": ""
-    },
-    "note": "Note",
-    "@note": {
-        "description": ""
-    },
-    "description": "Description",
-    "@description": {
-        "description": ""
-    },
-    "createLogs" : "Create Logs",
-    "@createLogs": {
-      "description": ""
-    },
-    "hour" : "Hour",
-    "@hour": {
-      "description": ""
-    },
-    "emptyLogsMessage" : "No any logs",
-    "@emptyLogsMessage": {
-      "description": ""
-    },
-    "saved" : "Saved",
-    "@saved": {
-      "description": ""
-    },
-    "deleted" : "Deleted",
-    "@deleted": {
-      "description": ""
-    },
-    "editLog" : "Edit Log",
-    "@editLog": {
-      "description": ""
-    },
-    "saveChanged" : "Save Changed",
-    "@saveChanged": {
-      "description": ""
-    },
-    "addLogsHistory" : "Add logs history",
-    "@addLogsHistory": {
-      "description": ""
-    },
-    "date" : "Date",
-    "@date": {
-      "description": ""
-    },
-    "search" : "Search",
-    "@search": {
-      "description": ""
-    },
-    "close" : "Close",
-    "@close": {
-      "description": ""
-    },
-    "seachResults" : "Search Results",
-    "@close": {
-      "description": ""
-    },
-    "noAnyResult" : "No any result",
-    "@noAnyResult": {
-      "description": ""
-    }
-    
+  "homePage": "Home",
+  "@homePage": {
+    "description": ""
+  },
+  "alert": "Alert",
+  "@alert": {
+    "description": ""
+  },
+  "addLogs": "Add Logs",
+  "@addLogs": {
+    "description": ""
+  },
+  "user": "User",
+  "@user": {
+    "description": ""
+  },
+  "time": "Time",
+  "@time": {
+    "description": ""
+  },
+  "accountName": "Account Name",
+  "@accountName": {
+    "description": ""
+  },
+  "diaryType": "Diary Type",
+  "@diaryType": {
+    "description": ""
+  },
+  "prority": "Prority",
+  "@prority": {
+    "description": ""
+  },
+  "note": "Note",
+  "@note": {
+    "description": ""
+  },
+  "description": "Description",
+  "@description": {
+    "description": ""
+  },
+  "createLogs": "Create Logs",
+  "@createLogs": {
+    "description": ""
+  },
+  "hour": "Hour",
+  "@hour": {
+    "description": ""
+  },
+  "emptyLogsMessage": "No any logs",
+  "@emptyLogsMessage": {
+    "description": ""
+  },
+  "saved": "Saved",
+  "@saved": {
+    "description": ""
+  },
+  "deleted": "Deleted",
+  "@deleted": {
+    "description": ""
+  },
+  "editLog": "Edit Log",
+  "@editLog": {
+    "description": ""
+  },
+  "saveChanged": "Save Changed",
+  "@saveChanged": {
+    "description": ""
+  },
+  "addLogsHistory": "Add logs history",
+  "@addLogsHistory": {
+    "description": ""
+  },
+  "date": "Date",
+  "@date": {
+    "description": ""
+  },
+  "search": "Search",
+  "@search": {
+    "description": ""
+  },
+  "close": "Close",
+  "@close": {
+    "description": ""
+  },
+  "language": "Language",
+  "@language": {
+    "description": ""
+  },
+  "seachResults": "Search Results",
+  "noAnyResult": "No any result",
+  "@noAnyResult": {
+    "description": ""
+  }
 }
