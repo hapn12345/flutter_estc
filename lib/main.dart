@@ -31,13 +31,6 @@ Future<void> setupFlutterNotifications() async {
   if (isFlutterLocalNotificationsInitialized) {
     return;
   }
-  channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -59,6 +52,7 @@ Future<void> setupFlutterNotifications() async {
 }
 
 void showFlutterNotification(RemoteMessage message) {
+  const int insistentFlag = 4;
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
   if (notification != null && android != null && !kIsWeb) {
@@ -68,10 +62,14 @@ void showFlutterNotification(RemoteMessage message) {
       notification.body,
       NotificationDetails(
           android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
+            'alert_notifications_channel',
+            'Alert Notifications Channel',
+            channelDescription: 'Alert Notifications Channel',
+            importance: Importance.max,
+            priority: Priority.high,
+            additionalFlags: Int32List.fromList(<int>[insistentFlag]),
             icon: 'launch_background',
+            sound: const RawResourceAndroidNotificationSound('alarm'),
           ),
           iOS: const IOSNotificationDetails()),
     );

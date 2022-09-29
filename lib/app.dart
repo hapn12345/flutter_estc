@@ -78,6 +78,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> prepare() async {
+    await SharedPreferenceUtil().init();
     var languageCode = await SharedPreferenceUtil().getLanguageCode();
     setState(() {
       _locale = Locale(languageCode);
