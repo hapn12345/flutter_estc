@@ -4,7 +4,7 @@ import 'dart:io';
 
 // ignore: depend_on_referenced_packages
 import 'package:estc_project/models/user.dart';
-import 'package:estc_project/util/share_preference_util.dart';
+import '/util/shared_preference_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/album.dart';

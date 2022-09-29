@@ -9,7 +9,6 @@ import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
 import 'package:estc_project/pages/user/user_page.dart';
-import 'package:estc_project/util/notification_api.dart';
 import 'package:estc_project/util/shared_preference_util.dart';
 
 import '../util/notification_util.dart';
