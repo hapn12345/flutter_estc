@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../util/share_preference_util.dart';
+import '../util/shared_preference_util.dart';
 import '../widgets/list_item.dart';
 
 class AlertPage extends StatefulWidget {
@@ -36,6 +37,27 @@ class _AlertPageState extends State<AlertPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).alert),
+        actions: [
+          //refresh
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.black,
+            ),
+          ),
+          //filter
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.filter_alt,
+              color: Colors.black,
+            ),
+          )
+        ],
+      ),
       body: Center(
         child: Text('Token:\n $_token'),
       ),

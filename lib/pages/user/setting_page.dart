@@ -2,12 +2,11 @@ import 'package:estc_project/network/network_request.dart';
 import 'package:estc_project/pages/login_page.dart';
 import 'package:estc_project/util/app_theme.dart';
 import 'package:flutter/material.dart';
-
-import '../../main.dart';
-import '../../models/user.dart';
-import '../../util/constants.dart';
-import '../../util/log_util.dart';
-import '../../util/share_preference_util.dart';
+import '../../app.dart';
+import '/models/user.dart';
+import '/util/constants.dart';
+import '/util/log_util.dart';
+import '/util/shared_preference_util.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);

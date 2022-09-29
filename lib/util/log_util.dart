@@ -19,7 +19,7 @@ class LogUtil {
 
   static void d(Object? object, {String? tag}) {
     if (_debugMode) {
-      log('$_defTag - ${tag!} | ${object?.toString()}');
+      log('$_defTag - $tag | ${object?.toString()}');
     }
   }
 

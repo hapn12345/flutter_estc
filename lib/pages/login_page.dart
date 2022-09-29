@@ -1,8 +1,7 @@
-import 'package:estc_project/network/network_request.dart';
-import 'package:estc_project/pages/home_page.dart';
-import 'package:estc_project/util/share_preference_util.dart';
 import 'package:flutter/material.dart';
 
+import '../routing/route_state.dart';
+import '../widgets/auth.dart';
 import '../widgets/text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -63,6 +62,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _inputField(context) {
+    final authState = BookstoreAuthScope.of(context);
+    final routeState = RouteStateScope.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -114,23 +115,31 @@ class _LoginPageState extends State<LoginPage> {
             : const SizedBox.shrink(),
         const SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              // NetWorkRequest().login(
-              //   userControllerName.text.toString(),
-              //   passWordControllerName.text.toString(),
-              //   () {
-              //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //         builder: (context) => const HomePage()));
-              //   },
-              //   () {
-              //     setState(() {
-              //       _showTextLoginFailed = true;
-              //     });
-              //   },
-              // ).then((value) => SharedPreferenceUtil().setToken(value));
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              final username = userControllerName.text.toString();
+              final password = passWordControllerName.text.toString();
+
+              var signedIn = await authState.signIn(username, password);
+              if (signedIn) {
+                await routeState.go('/home');
+              }
+
+              /*NetWorkRequest().login(
+                username,
+                password,
+                () async {
+                  var signedIn = await authState.signIn(username, password);
+                  if (signedIn) {
+                    await routeState.go('/home');
+                  }
+                },
+                () {
+                  setState(() {
+                    _showTextLoginFailed = true;
+                  });
+                },
+              ).then((value) => SharedPreferenceUtil().setToken(value));*/
             } else {
               setState(() {
                 _showTextLoginFailed = false;
