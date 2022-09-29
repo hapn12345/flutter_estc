@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:estc_project/models/log_item.dart';
-
 import 'package:estc_project/util/constants.dart';
 import 'package:estc_project/util/log_util.dart';
 import 'util/shared_preference_util.dart';

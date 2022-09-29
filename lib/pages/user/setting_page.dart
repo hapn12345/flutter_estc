@@ -1,5 +1,6 @@
 import 'package:estc_project/network/network_request.dart';
 import 'package:estc_project/pages/login_page.dart';
+import 'package:estc_project/util/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../app.dart';
 import '/models/user.dart';
@@ -17,7 +18,7 @@ class SettingPage extends StatefulWidget {
 class _UserPageState extends State<SettingPage> {
   VoidCallback? onTapImageProfile;
   bool _isVietnamese = false;
-  late bool _isDarkMode;
+  bool _isDarkMode = SharedPreferenceUtil().getDarkMode();
 
   @override
   void initState() {
@@ -35,7 +36,6 @@ class _UserPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -75,7 +75,21 @@ class _UserPageState extends State<SettingPage> {
                 "Dark mode",
                 Switch(
                   value: _isDarkMode,
-                  onChanged: (bool isDarkMode) {},
+                  onChanged: (bool isDarkMode) {
+                    setState(() {
+                      _isDarkMode = isDarkMode;
+                    });
+                    SharedPreferenceUtil().setDarkMode(_isDarkMode);
+                    if (_isDarkMode) {
+                      MyApp.of(context).then((app) {
+                        app!.setThemeMode(AppTheme().darkTheme);
+                      });
+                    } else {
+                      MyApp.of(context).then((app) {
+                        app!.setThemeMode(AppTheme().lightTheme);
+                      });
+                    }
+                  },
                 ),
               ),
               const SizedBox(height: 1),

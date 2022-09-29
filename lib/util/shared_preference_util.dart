@@ -6,6 +6,7 @@ class SharedPreferenceUtil {
   static const keyToken = "KEY_TOKEN";
   static const fcmToken = "FCM_TOKEN";
   static const firstLaunch = "FIRST_LAUNCH";
+  static const keyDarkMode = "KEY_DARK_MODE";
 
   static final SharedPreferenceUtil _instance =
       SharedPreferenceUtil._internal();
@@ -64,5 +65,14 @@ class SharedPreferenceUtil {
 
   Future<void> setFirstLaunch(bool value) async {
     await _prefs.setBool(firstLaunch, value);
+  }
+
+  Future<dynamic> setDarkMode(bool isDarkMode) async {
+    _prefs.setBool(keyDarkMode, isDarkMode);
+  }
+
+  bool getDarkMode() {
+    var darkMode = _prefs.getBool(keyDarkMode);
+    return darkMode ?? false;
   }
 }
