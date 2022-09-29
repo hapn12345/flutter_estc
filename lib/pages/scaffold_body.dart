@@ -1,11 +1,9 @@
 import 'package:estc_project/pages/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
+import 'package:estc_project/pages/user/setting_page.dart';
 import 'package:estc_project/pages/user/user_page.dart';
 import 'package:estc_project/pages/webview.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
-import '../network/network_request.dart';
 import '../routing.dart';
 
 import '../widgets/fade_transition_page.dart';
@@ -46,7 +44,7 @@ class BookstoreScaffoldBody extends StatelessWidget {
         else if (currentRoute.pathTemplate == '/user')
           const FadeTransitionPage<void>(
             key: ValueKey('user'),
-            child: UserPage(),
+            child: SettingPage(),
           )
         // Avoid building a Navigator with an empty `pages` list when the
         // RouteState is set to an unexpected path, such as /signin.
