@@ -25,6 +25,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = Constants.localeEN;
+  ThemeData _themeData = ThemeData();
 
   final _auth = Auth();
   final _navigatorKey = GlobalKey<NavigatorState>();
@@ -119,41 +120,36 @@ class _MyAppState extends State<MyApp> {
     LogUtil.d(tag: 'KhaiTQ', 'setLocale:${_locale.languageCode}');
   }
 
+  void setThemeMode(ThemeData themeData) {
+    setState(() {
+      _themeData = themeData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) => RouteStateScope(
         notifier: _routeState,
         child: BookstoreAuthScope(
           notifier: _auth,
           child: MaterialApp.router(
-            locale: _locale,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('vi'),
-            ],
-            debugShowCheckedModeBanner: false,
-            routerDelegate: _routerDelegate,
-            routeInformationParser: _routeParser,
-            title: 'Flutter ESTC',
-            // Revert back to pre-Flutter-2.5 transition behavior:
-            // https://github.com/flutter/flutter/issues/82053
-            theme: ThemeData(
-              pageTransitionsTheme: const PageTransitionsTheme(
-                builders: {
-                  TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                  TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                  TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
-                  TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
-                },
-              ),
-            ),
-          ),
+              locale: _locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('vi'),
+              ],
+              debugShowCheckedModeBanner: false,
+              routerDelegate: _routerDelegate,
+              routeInformationParser: _routeParser,
+              title: 'Flutter ESTC',
+              // Revert back to pre-Flutter-2.5 transition behavior:
+              // https://github.com/flutter/flutter/issues/82053
+              theme: _themeData),
         ),
       );
 
