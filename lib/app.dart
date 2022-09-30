@@ -154,8 +154,6 @@ class _MyAppState extends State<MyApp> {
               routerDelegate: _routerDelegate,
               routeInformationParser: _routeParser,
               title: 'Flutter ESTC',
-              // Revert back to pre-Flutter-2.5 transition behavior:
-              // https://github.com/flutter/flutter/issues/82053
               theme: _themeData),
         ),
       );

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:estc_project/models/log_item.dart';
+import 'package:estc_project/pages/splash_page.dart';
 import 'package:estc_project/util/constants.dart';
 import 'package:estc_project/util/log_util.dart';
 import 'util/shared_preference_util.dart';
@@ -32,6 +33,14 @@ Future<void> setupFlutterNotifications() async {
     return;
   }
 
+  channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
+
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   /// Create an Android Notification Channel.
@@ -62,9 +71,9 @@ void showFlutterNotification(RemoteMessage message) {
       notification.body,
       NotificationDetails(
           android: AndroidNotificationDetails(
-            'alert_notifications_channel',
-            'Alert Notifications Channel',
-            channelDescription: 'Alert Notifications Channel',
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
             importance: Importance.max,
             priority: Priority.high,
             additionalFlags: Int32List.fromList(<int>[insistentFlag]),
@@ -79,15 +88,10 @@ void showFlutterNotification(RemoteMessage message) {
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-void main() {
+Future<void> main() async {
   // Initialize UrlStrategy
   setHashUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  prepare();
-  runApp(const MyApp());
-}
-
-Future<void> prepare() async {
   // Initialize Log Util
   LogUtil.init(isDebug: true);
   // Initialize shared prefereneces
@@ -112,4 +116,6 @@ Future<void> prepare() async {
     LogUtil.d(tag: 'KhaiTQ', 'FCM Token: $token');
     SharedPreferenceUtil().setFcmToken(token ?? '');
   });
+
+  runApp(const MyApp());
 }
