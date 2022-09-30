@@ -108,7 +108,7 @@ Future<void> prepare() async {
     await setupFlutterNotifications();
   }
 
-  FirebaseMessaging.instance.getToken().then((token) {
+  await FirebaseMessaging.instance.getToken().then((token) {
     LogUtil.d(tag: 'KhaiTQ', 'FCM Token: $token');
     SharedPreferenceUtil().setFcmToken(token ?? '');
   });

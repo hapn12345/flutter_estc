@@ -1,4 +1,4 @@
-import 'package:estc_project/pages/alert_page.dart';
+import 'package:estc_project/pages/alert/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/user/setting_page.dart';
 import 'package:estc_project/pages/user/user_page.dart';

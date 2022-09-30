@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:estc_project/network/network_request.dart';
-import 'package:estc_project/pages/alert_page.dart';
+import 'package:estc_project/pages/alert/alert_page.dart';
 import 'package:estc_project/pages/log/add_logs_page.dart';
 import 'package:estc_project/pages/log/log_history_page.dart';
 import 'package:estc_project/pages/user/user_page.dart';
