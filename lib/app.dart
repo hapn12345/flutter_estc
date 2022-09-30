@@ -1,7 +1,12 @@
-import 'package:estc_project/pages/alert_page.dart';
+import 'dart:ffi';
+import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:estc_project/pages/alert/alert_page.dart';
 import 'package:estc_project/widgets/auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -43,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         '/login',
         '/home',
         '/alert',
+        '/alert/:alertId',
         '/log', //add log page
         '/log/log_history',
         '/log/log_history/:date&&:logId',
@@ -78,6 +84,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> prepare() async {
+    await SharedPreferenceUtil().init();
     var languageCode = await SharedPreferenceUtil().getLanguageCode();
     setState(() {
       _locale = Locale(languageCode);
@@ -147,8 +154,6 @@ class _MyAppState extends State<MyApp> {
               routerDelegate: _routerDelegate,
               routeInformationParser: _routeParser,
               title: 'Flutter ESTC',
-              // Revert back to pre-Flutter-2.5 transition behavior:
-              // https://github.com/flutter/flutter/issues/82053
               theme: _themeData),
         ),
       );
@@ -159,5 +164,26 @@ class _MyAppState extends State<MyApp> {
     _routeState.dispose();
     _routerDelegate.dispose();
     super.dispose();
+  }
+
+  void testAlertSound() {
+    const int insistentFlag = 4;
+    flutterLocalNotificationsPlugin.show(
+      Random().nextInt(1000000),
+      'notification.title',
+      'notification.body',
+      NotificationDetails(
+          android: AndroidNotificationDetails(
+            'alert_notifications_channel',
+            'Alert Notifications Channel',
+            channelDescription: 'Alert Notifications Channel',
+            importance: Importance.max,
+            priority: Priority.high,
+            additionalFlags: Int32List.fromList(<int>[insistentFlag]),
+            icon: 'launch_background',
+            sound: const RawResourceAndroidNotificationSound('alarm'),
+          ),
+          iOS: const IOSNotificationDetails(sound: 'alarm.aiff')),
+    );
   }
 }

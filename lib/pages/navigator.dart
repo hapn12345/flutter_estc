@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:estc_project/models/log_item.dart';
+import 'package:estc_project/pages/alert/alert_detail_page.dart';
 import 'package:estc_project/pages/log/filter_history_page.dart';
 import 'package:estc_project/pages/onboarding_page.dart';
 import 'package:estc_project/pages/splash_page.dart';
@@ -38,6 +39,7 @@ class _AppNavigatorState extends State<AppNavigator> {
   final _onboardingKey = const ValueKey('Onboarding');
   final _logHistoryKey = const ValueKey('Log History');
   final _alertKey = const ValueKey('Alert');
+  final _alertDetailKey = const ValueKey('Alert Detail');
   final _editLogKey = const ValueKey('Edit Log');
 
   @override
@@ -61,6 +63,11 @@ class _AppNavigatorState extends State<AppNavigator> {
       LogUtil.d('filter history with: $filterDate, $filterLogId');
     }
 
+    String? alertId;
+    if (pathTemplate == '/alert/:alertId') {
+      alertId = routeState.route.parameters['alertId'];
+    }
+
     return Navigator(
       key: widget.navigatorKey,
       onPopPage: (route, dynamic result) {
@@ -72,6 +79,11 @@ class _AppNavigatorState extends State<AppNavigator> {
         if (route.settings is Page &&
             (route.settings as Page).key == _logHistoryKey) {
           routeState.go('/log');
+        }
+
+        if (route.settings is Page &&
+            (route.settings as Page).key == _alertDetailKey) {
+          routeState.go('/alert');
         }
 
         return route.didPop(result);
@@ -106,6 +118,11 @@ class _AppNavigatorState extends State<AppNavigator> {
             MaterialPage<void>(
               key: _logHistoryKey,
               child: FilterHistoryPage(date: filterDate, logID: filterLogId),
+            )
+          else if (alertId != null)
+            MaterialPage<void>(
+              key: _alertDetailKey,
+              child: AlertDetailPage(alertId: alertId),
             )
         ],
       ],

@@ -1,12 +1,11 @@
-import 'package:estc_project/main.dart';
 import 'package:estc_project/util/log_util.dart';
 import 'package:flutter/material.dart';
 import '../../app.dart';
-import '../../util/constants.dart';
+import '/util/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../util/shared_preference_util.dart';
-import '../../widgets/auth.dart';
+import '/util/shared_preference_util.dart';
+import '/widgets/auth.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);

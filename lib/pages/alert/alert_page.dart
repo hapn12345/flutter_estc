@@ -1,8 +1,10 @@
+import 'package:estc_project/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../util/shared_preference_util.dart';
-import '../widgets/list_item.dart';
+import '../../routing/route_state.dart';
+import '../../util/shared_preference_util.dart';
+import '../../widgets/list_item.dart';
 
 class AlertPage extends StatefulWidget {
   final listItem = List<ListItem>.generate(
@@ -36,6 +38,7 @@ class _AlertPageState extends State<AlertPage> {
 
   @override
   Widget build(BuildContext context) {
+    final routeState = RouteStateScope.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).alert),
@@ -59,7 +62,24 @@ class _AlertPageState extends State<AlertPage> {
         ],
       ),
       body: Center(
-        child: Text('Token:\n $_token'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Token:\n $_token'),
+            ElevatedButton(
+              onPressed: () {
+                routeState.go('/alert/alert_Id_fake');
+              },
+              child: const Text('Open detail alert description'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                MyApp.of(context).then((value) => value!.testAlertSound());
+              },
+              child: const Text('Test sound alert'),
+            )
+          ],
+        ),
       ),
     );
     /*return Scaffold(
