@@ -71,7 +71,7 @@ void showFlutterNotification(RemoteMessage message) {
             icon: 'launch_background',
             sound: const RawResourceAndroidNotificationSound('alarm'),
           ),
-          iOS: const IOSNotificationDetails()),
+          iOS: const IOSNotificationDetails(sound: 'alarm.aiff')),
     );
   }
 }
